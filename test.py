@@ -72,6 +72,8 @@ def smartSum(text, first, second):
             return 1
         if line.count(first) > 0 :
             trigged = True
+        else :
+            trigged = False
         return 0
 
     ret =  reduce(lambda x,y : x + helper(y), text.split('\n'), 0)
@@ -87,7 +89,7 @@ def simpleTest(n = 4):
     files = []
     for j in switches :
         filename = "snoop" + str( j.dpid ) + '.dmp'
-        j.dpctl('snoop', '2>' + filename + '&')
+        j.dpctl('snoop', '2>&1 >/dev/null | grep -E "OFPT_FLOW_MOD|OFPT_PACKET_IN|dl_type=0x88cc|OFPT_PACKET_OUT|OFPT_FLOW_REMOVED > ' + filename + '&')
         files.append(filename)
     time.sleep(0.5)
 #dumpNodeConnections(net.hosts)
