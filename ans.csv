@@ -1,1 +1,4 @@
 n, flow_mods, packet_ins, lldp_packet_ins, packet_outs, lldp_packet_outs, flow_removeds, loss
+2, 15, 6, 1, 6, 6, 3, 0.000000
+2, 11, 5, 1, 0, 0, 0, 0.000000
+3, 43, 21, 6, 15, 9, 0, 0.000000

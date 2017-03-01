@@ -89,11 +89,13 @@ def simpleTest(n = 4):
     files = []
     for j in switches :
         filename = "snoop" + str( j.dpid ) + '.dmp'
-        j.dpctl('snoop', '2>&1 >/dev/null | grep -E "OFPT_FLOW_MOD|OFPT_PACKET_IN|dl_type=0x88cc|OFPT_PACKET_OUT|OFPT_FLOW_REMOVED > ' + filename + '&')
+        j.dpctl('snoop', '2>&1 >/dev/null | grep -E "OFPT_FLOW_MOD|OFPT_PACKET_IN|dl_type=0x88cc|OFPT_PACKET_OUT|OFPT_FLOW_REMOVED" > ' + filename + '&')
         files.append(filename)
     time.sleep(0.5)
 #dumpNodeConnections(net.hosts)
+    nowtime = time.time()
     loss = net.pingAll()
+    nowtime = time.time() - nowtime
     if loss > 10 :
         print "WARNING: in %d hosts too many loss" %n
     net.stop()
@@ -120,7 +122,14 @@ def simpleTest(n = 4):
     f.write("%d, %d, %d, %d, %d, %d, %d, %f\n" % (n , flowmods , packet_ins , lldp_packet_ins , packet_outs , lldp_packet_outs , flow_removeds , loss))
     f.close()
 
-    print flowmods, packet_ins, lldp_packet_ins, packet_outs, lldp_packet_outs, flow_removeds
+    print """FlowMod: %d,
+Packet_in: %d,
+lldp_Packet: %d,
+Packet_out: %d,
+lldp_Packet_out: %d,
+FlowRemoved: %d,
+Lost: %f,
+Time: %f""" % (flowmods, packet_ins, lldp_packet_ins, packet_outs, lldp_packet_outs, flow_removeds, loss, nowtime)
 
 if __name__ == '__main__':
     for i in range(2, 4):
