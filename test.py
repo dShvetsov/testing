@@ -118,8 +118,8 @@ def simpleTest(n = 4):
         flow_removeds += text.count('OFPT_FLOW_REMOVED')
 
     f.close()
-    f = open('ans.csv', 'a')
-    f.write("%d, %d, %d, %d, %d, %d, %d, %f\n" % (n , flowmods , packet_ins , lldp_packet_ins , packet_outs , lldp_packet_outs , flow_removeds , loss))
+    f = open('many_tests.csv', 'a')
+    f.write("%d, %d, %d, %d, %d, %d, %d, %f, %f\n" % (n , flowmods , packet_ins , lldp_packet_ins , packet_outs , lldp_packet_outs , flow_removeds , loss, nowtime))
     f.close()
 
     print """FlowMod: %d,
@@ -132,6 +132,7 @@ Lost: %f,
 Time: %f""" % (flowmods, packet_ins, lldp_packet_ins, packet_outs, lldp_packet_outs, flow_removeds, loss, nowtime)
 
 if __name__ == '__main__':
-    for i in range(2, 4):
-        simpleTest(i)
+    for j in range(5):
+        for i in range(2, 41):
+            simpleTest(i)
 #topos = {'mytopo' : ( lambda n: BinTreeTopo(n) ) }
